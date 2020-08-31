@@ -1,0 +1,37 @@
+function getPlayerInput() {
+
+    prompt player for input
+    save input to variable
+    make input all lowercase
+
+    return player's input
+}
+
+function isInputValid(string) {
+    if string doesn't match 'rock' 'paper' or 'scissors'
+        return false;
+    else
+        return true;
+}
+
+function computerPlay() {
+    randomly return 'rock' 'paper' or 'scissors'
+}
+
+function playRound(playerSelection, computerSelection) {
+
+    compare playerSelection to computerSelection and see who wins
+
+    return victory string
+}
+
+getPlayerInput(), save to variable
+
+if isInputValid returns false, restart loop
+else continue
+
+get computer's play, computerPlay(), save to variable
+
+playRound with player and computer input
+
+print playRound result

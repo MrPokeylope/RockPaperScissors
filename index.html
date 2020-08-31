@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+
+const RPS_ARRAY = ["rock", "paper", "scissors"];
+
+function getPlayerInput() {
+
+    // prompt player for input
+    // save input to variable
+    // make input all lowercase
+    let input = prompt(`Enter "rock", "paper" or "scissors":`).toLowerCase().trim();
+
+    return input;
+}
+
+function isInputValid(input) {
+
+    let inputCheck = true;
+
+    // loop through rock, paper, scissors array and check if 
+    // input matches anything. if it doesn't, return false
+    RPS_ARRAY.forEach(
+        function(item) {
+            if (item !== input)
+                inputCheck = false;
+        }
+    );
+
+    return inputCheck;
+}
+
+function computerPlay() {
+    // randomly return 'rock' 'paper' or 'scissors'
+    let randNum = Math.floor(Math.random() * 3);
+
+    return RPS_ARRAY[randNum];
+}
+
+function playRound(playerSelection, computerSelection) {
+
+    // compare playerSelection to computerSelection and see who wins
+
+    // return victory string
+}
+
+let keepGoing = true;
+
+// gameplay loop
+while(keepGoing) {
+
+    let playerInput = getPlayerInput();
+
+    // check if playerInput exists in RPS ARRAY
+    let isInputValid = RPS_ARRAY.includes(playerInput);
+    console.log(isInputValid);
+    
+    if (!isInputValid) {
+        // if player input is not valid, print error message and end loop
+        keepGoing = false;
+        console.log("Sorry, your input wasn't recognized. Refresh the page and try again!");
+    } 
+    else {
+        // continue the game
+        let computerInput = computerPlay();
+
+        // playRound with player and computer input
+
+        // print playRound result
+
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
