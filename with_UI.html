@@ -17,7 +17,7 @@ function computerPlay() {
 
 function playRound(playerSelection, computerSelection) {
 
-    let resultStr = "", outcome = "";
+    let resultStr = "";
 
     // compare playerSelection to computerSelection and see who wins
     console.log(`Player chose: ${playerSelection}`);
@@ -31,11 +31,11 @@ function playRound(playerSelection, computerSelection) {
                     break;
                 case 'paper':
                     resultStr = "You Lose! Paper beats Rock";
-                    outcome = "loss";
+                    score.compWins++;
                     break;
                 case 'scissors':
                     resultStr = "You Win! Rock beats Scissors";
-                    outcome = "win";
+                    score.playerWins++;
                     break;
             }
             break;
@@ -44,14 +44,14 @@ function playRound(playerSelection, computerSelection) {
             switch(computerSelection) {
                     case 'rock':
                         resultStr = "You Win! Paper beats Rock";
-                        outcome = "win";
+                        score.playerWins++;
                         break;
                     case 'paper':
                         resultStr = "It's a tie! Paper vs Paper";
                         break;
                     case 'scissors':
                         resultStr = "You Lose! Scissors beats Paper";
-                        outcome = "loss";
+                        score.compWins++;
                         break;
                 }
             break;
@@ -60,11 +60,11 @@ function playRound(playerSelection, computerSelection) {
             switch(computerSelection) {
                 case 'rock':
                     resultStr = "You Lose! Rock beats Scissors";
-                    outcome = "loss";
+                    score.compWins++;
                     break;
                 case 'paper':
                     resultStr = "You Win! Scissors beats Paper";
-                    outcome = "win";
+                    score.playerWins++;
                     break;
                 case 'scissors':
                     resultStr = "It's a tie! Scissors vs Scissors";
@@ -74,11 +74,12 @@ function playRound(playerSelection, computerSelection) {
     }
 
     // return object with result string and playerWin boolean
-    return {resultStr, outcome};
+    return resultStr;
 }
 
 function setupUI() {
     const body = document.querySelector('body');
+
     const btnDiv = document.createElement('div');
     const scoreDiv = document.createElement('div');
 
@@ -86,16 +87,25 @@ function setupUI() {
     const paperBtn = document.createElement('button');
     const scissorsBtn = document.createElement('button');
 
-    // btnDiv.textContent = "This is text";
-    btnDiv.style.cssText = "display: flex; justify-content: space-evenly; margin: 30px";
-    scoreDiv.textContent = `Player Wins: ${score.playerWins}
-    Computer Wins: ${score.compWins}`;
+    const list = document.createElement('ul');
+    const playerListItem = document.createElement('li');
+    const compListItem = document.createElement('li');
+    const resultListItem = document.createElement('li');
+
+    btnDiv.classList.add('container');
+    scoreDiv.classList.add('score');
+
+    playerListItem.textContent = `Player Wins: ${score.playerWins}`;
+    compListItem.textContent = `Computer Wins: ${score.compWins}`;
+    resultListItem.textContent = '';
 
     rockBtn.textContent = "Rock";
     paperBtn.textContent = "Paper";
     scissorsBtn.textContent = "Scissors";
 
     btnDiv.append(rockBtn, paperBtn, scissorsBtn);
+    list.append(playerListItem, compListItem, resultListItem);
+    scoreDiv.appendChild(list);
     body.append(btnDiv, scoreDiv);
 
     const buttons = document.querySelectorAll('button');
@@ -104,7 +114,10 @@ function setupUI() {
     // for the playRound function
     for (let i = 0; i < 3; i++) {
         buttons[i].addEventListener('click', () => {
-            playRound(RPS_ARRAY[i], computerPlay());
+            let result = playRound(RPS_ARRAY[i], computerPlay());
+            playerListItem.textContent = `Player Wins: ${score.playerWins}`;
+            compListItem.textContent = `Computer Wins: ${score.compWins}`;
+            resultListItem.textContent = result;
         });
     }
 }
@@ -131,10 +144,6 @@ setupUI();
     //         break;
     // }
 
-    // // print score
-    // console.log(`Score: You (${score.playerWins}), Computer (${score.compWins})`);
-    // roundCounter++;
-
     // // check win condition
     // if (score.playerWins > score.compWins) {
     //     console.log("Congrats! You won the game!");
@@ -150,27 +159,39 @@ setupUI();
 
 <style>
 
-button {
-    background-color: #2bb1f9;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 9px #999;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-}
+    .container {
+        display: flex; 
+        justify-content: space-evenly; 
+        margin: 30px;
+    }
 
-button:hover {
-    background-color: #0d95de
-}
+    .score {
+        border: 1px solid black;
+        margin: 20px;
+    }
 
-button:active {
-  background-color: #0d95de;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
+    button {
+        background-color: #2bb1f9;
+        border: none;
+        border-radius: 15px;
+        width: 20vw;
+        box-shadow: 0 9px #999;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0d95de
+    }
+
+    button:active {
+    background-color: #0d95de;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+    }
 </style>
 
 </body>
